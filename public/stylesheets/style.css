@@ -1,0 +1,220 @@
+/* catdamnit.net */
+
+/* General tag styling */
+* { padding: 0; margin: 0; }
+
+img.cd-bg { min-height: 100%; min-width: 990px; width: 100%; height: auto;
+            position: fixed; top: 0; left: 0; }
+
+@media screen and (max-width: 990px) {
+  img.cd-bg { left: 50%; margin-left: -512px; }
+}
+
+body {
+    font-family: "LatoWeb";
+    font-style: normal;
+    color: #fff;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+ul { list-style-type: none; }
+a { text-decoration: none; }
+
+.cd-body { positon: relative; height: 100%; width: 990px; overflow: auto; }
+
+/* Header and menu style */
+.cd-header { position:absolute; top: 0px; height: 13em; color: grey; 
+             font-family: "LatoWebBold"; width: 100%; }
+.cd-header .cd-header-logo {  height: 50%; text-align: center; 
+                             font-style: normal; font-size: 5em; letter-spacing: .15em; }
+
+.cd-header .cd-header-nav { background-color: #000; position: relative; height: 3em;
+                            left: 0; top: 0; right: 0; font-size: 2em; z-index: 10; }
+
+/* Navbar items */
+.cd-nav-items, .cd-nav-items ul,
+.cd-nav-items li, .cd-nav-items a { margin: 0; padding: 0; border: none; outline: none; }
+.cd-nav-items { margin-left: 4em; position: absolute; top: 35%;}
+.cd-nav-items li { position: relative; list-style: none; float: left; display: block; }
+
+.cd-nav-items li a { display: block; margin: .2em .5em; 
+                     text-decoration: none; font-size: 1em;
+                     text-shadow: 1px 1px 1px rgba(0,0,0,.6); }
+
+
+/*.cd-nav-items li:hover > a { color: #8fde62; }*/
+
+.cd-nav-items ul { position: absolute; top: 90%; left: 0; opacity: 0; padding: .5em 0;
+                   width: 8em; background: #0e0e0e;
+                   background: -moz-linear-gradient(top, #0e0e0e 0%, #494949 100%);
+                   background: -webkit-linear-gradient(top, #0e0e0e 0%, #494949 100%);
+                   background: linear-gradient(to bottom, #0e0e0e 0%, #494949 100%);
+                   -webkit-border-radius: 5px; -moz-border-radius: 5px;
+                   border-radius: 5px;
+                   -webkit-transition: opacity .25s ease .1s;
+                   -moz-transition: opacity .25s ease .1s;
+                   -o-transition: opacity .25s ease .1s;
+                   -ms-transition: opacity .25s ease .1s;
+                   transition: opacity .25s ease .1s; }
+ 
+.cd-nav-items li:hover > ul { opacity: 1; }
+ 
+.cd-nav-items ul li { overflow: hidden; padding: auto;
+                      -webkit-transition: height .25s ease .1s;
+                      -moz-transition: height .25s ease .1s;
+                      -o-transition: height .25s ease .1s;
+                      -ms-transition: height .25s ease .1s;
+                      transition: height .25s ease .1s; }
+
+.cd-nav-items ul li a { padding: .1em .5em; margin: 0 .5em;
+                        border: none; }
+
+
+/* Navbar menu */
+.cd-nav-menu { position: absolute; top: 35%; right: 0; }
+.cd-nav-menu:hover .cd-nav-menu-content { opacity: 1; }
+
+.cd-nav-menu-content { float: left; opacity: 0;
+                       -webkit-transition: opacity 0.4s ease-in 0.4s;
+                       -moz-transition: opacity 0.4s ease-in 0.4s;
+                       -ms-transition: opacity 0.4s ease-in 0.4s;
+                       transition: opacity 0.4s ease-in 0.4s ;}
+
+.cd-nav-menu-content:hover { display: block; }
+.cd-nav-menu-content ul {  }
+.cd-nav-menu-content ul li { display: inline; }
+.cd-nav-menu-btn { float: right; margin: 0 2em 0; display: inline-block;
+                   width: 2em; text-align: center; }
+.menu-symbol { color: grey; width: 100%; display: inline-block; }
+.menu-symbol:before { font-family: "Quivira";
+                      content: "\2c0d \2c11 \2c15"; }
+
+
+/* 
+ * Fix for the link effect.
+ * Only want to rotate symbol, not background 
+ */
+.menu-symbol:hover { transform: rotate(10deg); color: black;
+                     transition: all .4s linear; -moz-transition: all .4s linear;
+                     -webkit-transition: all .4s linear; }
+
+/* Main content body */
+.cd-content { position: absolute; top: 13em;
+              padding-top: 1em; margin-left: 1em; margin-right: 1em;
+              text-align: center; width: 100%; min-height: 80%; 
+              font-family: "LatoWeb"; font-size: 1em; }
+
+.cd-content-left { float: left; min-width: 75%; max-width: 75%; text-align: center;
+                   padding-left: 2em;
+                   border-top: 1px solid grey; border-left: 1px solid grey;
+                   border-radius: 20px; }
+
+/* The actual post */
+.cd-post-title { color: grey; font-family: "LatoWebBold"; font-size: 2.5em;
+                 text-shadow: 2px 2px 2px #CCCCCC; }
+.cd-post-meta { font-family: "LatoWebHairline"; font-size: 0.8em;
+                margin: 0 0.5em 1em;  }
+.cd-post-meta:before { content: "\1f563"; font-size: 1.1em; margin-right: .3em; }
+.cd-post-content { text-align: left; padding: 2em 4em 2em; color: grey; }
+p code { color: white; margin-left: 1.5em; display: block; 
+         font-family: "LatoWebHairline"; font-style: italic; font-size: 0.8em; }
+.cd-post-content p { font-size: 1.5em; }
+
+
+/* Right body */
+.cd-content-right { float: left; width: 20%; }
+.cd-content-right-tweets { margin: 0 0 0 1em; height: 17em;
+                           overflow: scroll; }
+.cd-content-right-links { margin: 2em 0 0 1em; height: 17em; padding: 2em 0 .5em; }
+
+.cd-content-right-links p { font-family: "LatoHeavy"; font-style: normal; font-size: 1.5em; }
+
+.cd-content-links-list { padding: .5em 0; }
+.cd-content-links-list ul li a { color: grey; display: inline-block;}
+
+/* modal generic */
+.cd-modal { position: fixed; opacity: 0; background-color: grey;
+            -webkit-box-shadow: inset 0 0 10px 4px black;
+            -moz-box-shadow: inset 0 0 10px 4px black;
+	    box-shadow: inset 0 0 10px 4px black; 
+            border: 1px solid black; border-radius: 10px; } 
+/* Login modal */
+.cd-login-modal { top: 20em; left: 20em; width: 50%; padding: 1em; }
+
+.cd-login-modal-head { float: right; text-align: center; color: black; }
+.cd-login-modal-head:hover { color: white; cursor: pointer; }
+.cd-login-modal-head:before { content: "\2297"; }
+
+.cd-login-modal-body { text-align: center; }
+.cd-login-modal-form input { margin: 0 2em 0; width: 20em; height: 2em;
+                             border: 1px solid #ccc; color: grey;
+	                     -moz-border-radius: 10px; -webkit-border-radius: 10px;
+	                     border-radius: 10px; -moz-box-shadow: 2px 4px 3px #666;
+	                     -webkit-box-shadow: 2px 4px 3px #666;
+	                     box-shadow: 2px 4px 3px #666; padding: 0 7px 0;
+	                     outline: 0; }
+.cd-login-modal-form input:focus { border-color: black; }
+.cd-login-modal-form .cd-login-submit { width: 10em; }
+.cd-login-modal-form .cd-login-submit:hover { background-color: grey; color: white;
+                                              border-color: black; }
+
+.cd-content, .cd-login-modal { transition: all 0.3s ease; -webkit-transition: all 0.3s ease;
+                            -moz-transition: all 0.3s ease; }
+/* Updates modal */
+.cd-update-modal { bottom: 2em; left: 2em; text-align: center; padding: 2%;
+                   min-height: 5em; height: auto; min-width: 12em; z-index: -10; }
+
+
+/* Editor */
+.cd-editor-title { margin: .5em 5em 1em 5em; min-width: 25%; padding: 0 0.2em;
+                   color: #000; text-align: center; border-radius: 10px; }
+
+.cd-editor-tag { text-transform: capitalize; }
+
+input[type="text"].cd-editor-title { font-size: 1em; }
+
+/* Effects */
+/* Little negative-background effect for the links */
+.link > a { border: transparent solid; border-radius: 8px; color: grey;
+          transition: background-color .5s linear, color .5s linear;
+          -moz-transition: background-color .5s linear, color .5s linear;
+          -webkit-transition: background-color .5s linear, color .5s linear;
+          text-transform: capitalize; }
+
+.link .link a { font-size: .4em; }
+
+.link:hover > a { color: black; background-color: grey; }
+
+.cd-footer { position: absolute; bottom: -8em; left: 0; right: 0; height: 5em; 
+             font-family: "LatoWebMedium"; font-style: italic; font-size: 1em; color: grey; }
+.cd-footer p:before { content: "\00a9" }
+
+.cd-footer .cd-footer-tech { height: 5em; width: 100%; }
+.cd-footer .cd-footer-left { float: left; margin-left: 5em; z-index: 10; }
+.cd-footer .cd-footer-right { float: right; margin-right: 5em; z-index: 10; }
+
+.cd-footer #postgres { background: url(../images/pg_logo.gif) no-repeat 6px center; }
+
+.roundy { border-top: .1em solid grey; border-right: .1em solid grey;
+          border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; }
+
+.button { background: #b0b0b0; color: #000; margin: 1em .2em; width: 6em; height: 2em;
+          background-image: -webkit-linear-gradient(top, #b0b0b0, #333333);
+          background-image: -moz-linear-gradient(top, #b0b0b0, #333333);
+          background-image: -ms-linear-gradient(top, #b0b0b0, #333333);
+          background-image: -o-linear-gradient(top, #b0b0b0, #333333);
+          background-image: linear-gradient(to bottom, #b0b0b0, #333333);
+          padding: 0 .3em 0 .3em; border: .1em solid grey;
+          -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; }
+
+.button:hover { background: #a3a3a3; 
+                background-image: -webkit-linear-gradient(top, #a3a3a3, #ffffff);
+                background-image: -moz-linear-gradient(top, #a3a3a3, #ffffff);
+                background-image: -ms-linear-gradient(top, #a3a3a3, #ffffff);
+                background-image: -o-linear-gradient(top, #a3a3a3, #ffffff);
+                background-image: linear-gradient(to bottom, #a3a3a3, #ffffff);}
+
+.blur { filter: blur(5px) grayscale(60%);
+        -webkit-filter: blur(5px) grayscale(60%);
+        -moz-filter: blur(5px) grayscale(60%); }

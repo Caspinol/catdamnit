@@ -1,0 +1,56 @@
+<!DOCTYPE html> 
+<html>  
+    <head>        
+        <title>{{title}}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel='stylesheet' charset="utf-8" href='/stylesheets/fonts.css'/>
+        <link rel='stylesheet' charset="utf-8" href='/stylesheets/style.css'/>
+    </head>
+    <body>
+        <img class="cd-bg" src="../images/catdamnit_background.jpg" >
+        <div class="cd-body">
+            {{#if user }}
+                {{> profile_header }}
+                {{> profile_content }}
+            {{else}}
+                {{> header }}
+                {{> content }}        
+            {{/if}}
+    
+
+            <!-- Login modal -->
+            <div class="cd-modal cd-login-modal">
+                <div class="cd-login-modal-head"></div>
+                <div class="cd-login-modal-body">
+                    <form class="cd-login-modal-form">
+                        <input type="text" class="cd-login-username"
+                                name="username" placeholder="User">
+                        <input type="password" class="cd-login-pass"
+                                name="password" placeholder="Password">
+                        <input type="submit" class="cd-login-submit"
+                                id="login-submit" value="Login">
+                    </form>
+                </div>
+                <div class="cd-login-modal-update"></div> 
+            </div><!-- End of login modal -->
+
+            <!-- Update modal -->
+            <div class="cd-modal cd-update-modal">
+                
+            </div> <!-- End of update modal -->
+        </div>
+
+    </body>
+	<script type="text/javascript"
+				src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="/javascripts/tinymce/tinymce.min.js"></script>
+	<script type="text/javascript" src="/javascripts/cd.shell.js"></script>
+	<script type="text/javascript" src="/javascripts/cd.sticky.js"></script>
+    <script type="text/javascript" src="/javascripts/cd.login.js"></script>
+    <script type="text/javascript" src="/javascripts/cd.editor.js"></script>
+    <script type="text/javascript" src="/javascripts/cd.update.js"></script>
+	<script>
+		$(function () { catdamnit.initModule(); });
+	</script>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</html>

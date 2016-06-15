@@ -1,0 +1,36 @@
+<div class="cd-header">
+    <div class="cd-header-logo">
+        <p>{{title}}</p>        
+    </div>
+    <div class="cd-header-nav">
+        <ul class="cd-nav-items">
+            <li class="link"><a href="/">Home</a></li>
+            {{#each posts}}
+            <li class="link"><a href="#">{{ tagname }}</a>
+                {{#if posts}}
+                <ul> 
+                    {{#each posts}}
+                    <li class="link"><a href="/post/{{postid}}">
+                        {{post_title}}</a>
+                    </li>
+                    {{/each}}
+                </ul>
+                {{/if}}
+            </li>    
+            {{/each}}
+            <li class="link"><a href="/about">Me</a></li>
+         </ul> <!-- End of cd-navbar-items -->
+        <div class="cd-nav-menu">
+            <div class="cd-nav-menu-content">
+                <ul>
+                    <li class="link">
+	                    <a id="cd-login" href="#">Login</a>
+	                </li>
+                </ul>
+            </div>
+            <div class="cd-nav-menu-btn link">
+                <a><div class="menu-symbol"> </div></a>
+            </div>
+        </div> <!-- End of cd-navbar-menu -->
+    </div>      
+</div> <!-- End of cd-header -->

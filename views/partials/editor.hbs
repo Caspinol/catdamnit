@@ -1,0 +1,15 @@
+
+    <form method="post" class="cd-editor-form">
+        <input class="cd-editor-title button" type="text"
+                name="post-title" placeholder="Title">
+        <textarea id="cd-post-editor" name="post-txt"></textarea>
+        <select name="post-tag" class="cd-editor-tag button">
+            <option value="">Tag</option>
+            {{#each tags }}
+            <option value="{{ tagid }}">{{ tagname }}</option>
+            {{/each}}
+        </select>
+        <input class="cd-editor-post button" type="submit" value="Submit">
+        <input class="cd-editor-cancel button" type="button" value="Cancel">
+    </form>
+

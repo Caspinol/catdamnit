@@ -1,0 +1,24 @@
+{
+  "name": "catdamnit",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.*",
+    "bluebird": "3.4.*",
+    "body-parser": "~1.15.*",
+    "connect-flash": "*",
+    "cookie-parser": "~1.4.*",
+    "debug": "^2.2.0",
+    "express": "~4.13.1",
+    "express-handlebars": "^3.0.0",
+    "express-session": "1.13.*",
+    "log4js": "0.6.*",
+    "passport": "0.3.*",
+    "passport-local": "1.0.*",
+    "pg-promise": "4.3.*",
+    "serve-favicon": "~2.3.0"
+  }
+}

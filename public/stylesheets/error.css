@@ -1,0 +1,20 @@
+/* catdamnit.net Error page CSS */
+
+/* General tag styling */
+* { padding: 0; margin: 0; }
+
+img.cd-bg { min-height: 100%; min-width: 990px; width: 100%; height: auto;
+            position: fixed; top: -40%; left: 0; z-index: -10; }
+
+@media screen and (max-width: 990px) {
+  img.cd-bg { left: 50%; margin-left: -512px; }
+}
+
+a { text-decoration: none; }
+body { color: grey; max-width: 100%; }
+
+
+.cd-body { font-family: "LatoWeb"; font-style: normal; text-align: left;
+           position: absolute; left: 0; top: 10%; margin: 0; }
+
+.cd-error-header { font-size: 5em;  }
