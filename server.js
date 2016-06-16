@@ -9,17 +9,10 @@ favicon = require('serve-favicon'),
 cookieParser = require('cookie-parser'),
 bodyParser = require('body-parser'),
 passport = require('passport'),
-log4js = require('log4js'),
-
-pgp = require('pg-promise')({promiseLib: require('bluebird')});
-
-/* Fix the date formating for postgres */
-/* TODO: Move to separate module */
-pgp.pg.types.setTypeParser(1114, (stringValue)=>{
-    return stringValue.split('.')[0];
-});
+log4js = require('log4js');
 
 log4js.configure(config.logging);
+var logger = log4js.getLogger('catdamnit');
 
 /* Set up app object */
 var app = express();
@@ -35,9 +28,7 @@ app.set('view options', {layout: false});
 app.set('view engine', '.hbs');
 
 /* Make a namespace for our stuff */
-app.locals.logger = log4js.getLogger('catdamnit');
-app.locals.config = config;
-app.locals.db = pgp(config.database);
+app.locals.db = require('./lib/db');
 app.locals.hbs = hbs;
 
 

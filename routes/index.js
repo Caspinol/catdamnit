@@ -1,11 +1,15 @@
+var
+config = require('../config'),
+logger = require('log4js').getLogger('catdamnit');
 
-module.exports = function(app, password){
+module.exports = function(app, passport){
     'use strict';
+    var db = app.locals.db;
 
     /* Preload the common stuff */
     (function(app){
         app.use(function(req, res, next){
-            app.locals.db.tx(function(t){
+            db.tx(function(t){
                 return t.batch([
                     t.many("SELECT tagid, tagname FROM tags ORDER BY tagid;"),
                     t.many("SELECT t.tagid,tagname,postid,post_title "
@@ -16,7 +20,7 @@ module.exports = function(app, password){
             })
                 .then((rows)=>{
                     res.locals.posts = cleanupPosts(rows[0], rows[1]);
-                    res.locals.title = app.locals.config.appname;
+                    res.locals.title = config.appname;
                     res.locals.user = req.isAuthenticated()?req.user:null; 
                     next();
                 })
@@ -29,8 +33,6 @@ module.exports = function(app, password){
     }(app));
     
     
-    var db = app.locals.db,
-        logger = app.locals.logger;
     
     /* GET home page. */
     app.get('/', function(req, res, next) {
@@ -41,8 +43,10 @@ module.exports = function(app, password){
                 next();
             })
             .catch((err)=>{
-                logger.error("Failed to load the post...");
-                logger.error(err);
+                return next(handleError({
+                    code: 404,
+                    message: "Failed to load the post"
+                }));
             });
     }, doRender('boiler'));
     
@@ -54,12 +58,17 @@ module.exports = function(app, password){
                         res.send(t({ tags: tags, editor: true }));
                     })
                     .catch((err)=>{
-                        logger.error(err);
+                        return next(handleError({
+                            code: 404,
+                            message: "Failed to load editor"
+                        }));
                     });
             })
             .catch((err)=>{
-                logger.error("Failed to load the tags...");
-                logger.error(err);
+                return next(handleError({
+                    code: 404,
+                    message: "Failed to load the tags"
+                }));
             });
     });
     
@@ -102,8 +111,10 @@ module.exports = function(app, password){
                 next();
             })
             .catch((err)=>{
-                logger.error("Failed to load the post...");
-                logger.error(err);
+                return next(handleError({
+                    code: 404,
+                    message: "No page here human"
+                }));
             });
     }, doRender('boiler'));
 
@@ -112,18 +123,21 @@ module.exports = function(app, password){
     });
 
     app.post('/login', function(req, res, next){
-        password.authenticate('local-login',
-                              { failureRedirect: '/login' },
+        passport.authenticate('local-login',
                               function(err, user, info){
-                                  if(err) return next(err);
-                                  if(!user) return res.status(401).json(info);
-                                  req.login(user, function(err) {
+                                  if(err) return next(handleError({
+                                      code: 401,
+                                      message: "Wrong username"
+                                  }));
+                                  if(!user) return next(handleError({
+                                      code: 401,
+                                      message: info.message
+                                  }));
+                                  req.logIn(user, function(err) {
                                       if (err) { return next(err); }
                                       req.session.cookie.expires = false;
-                                      /* 15min session */
-                                      req.session.cookie.maxAge = 1000*60*15; 
-                                      res.send({redirect: '/profile',
-                                                message: 'Dillon, you sonovabitch!'});
+                                      req.session.cookie.maxAge = 1000*60*60; 
+                                      res.send({redirect: '/profile'});
                                   });
                               })(req, res, next); 
     });

@@ -26,12 +26,9 @@ var catdamnit = (function(){
             type: 'GET',
             url: '/newpost',
             error: function(err){
-                $('.cd-update-modal').animate({'opacity': 1, 'z-index': 100}, 2000)
-                    .text(JSON.parse(err.responseText).message).delay(2000)
-                    .animate({'opacity': 0, 'z-index': -10}, 2000);
+                catdamnit.update.error(err.statusText);
             },
             success: function(data){
-                console.log(data);
                 content.empty();
                 content.html(data);
                 catdamnit.editor.show();

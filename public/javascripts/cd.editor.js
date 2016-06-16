@@ -22,7 +22,8 @@ catdamnit.editor = (function(){
         $('.cd-editor-form').on('submit', function(e){
             e.preventDefault();
             validatePost($(this), function(err, form_data){
-                if(err) {
+                if(err){
+                    catdamnit.update.error(err);
                     return;
                 }
                 savePost(form_data);
@@ -53,14 +54,22 @@ catdamnit.editor = (function(){
     };
 
     function validatePost(form, cb){
-        var fd = form.serialize();
-        console.log(fd);
+        var
+        fd = {};
+        $.each(form.serializeArray(), (i, input)=>{
+            fd[input.name] = input.value;
+        });
+
         if(fd['post-title'] === undefined || fd['post-title'] === ''){
-            
+            var e = new Error("Title is missing");
+            return cb(e);
         }
-        cb(null, form_data);
+        if(fd['post-tag'] === undefined || fd['post-tag'] === ''){
+            var e = new Error("Need to specyfy a tag");
+            return cb(e);
+        }
+        cb(null, form.serialize());
     };
 
     return { show: show };
-    
 }());

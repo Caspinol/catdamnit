@@ -19,23 +19,17 @@ catdamnit.login = (function(){
                 url: '/login',
                 data: form.serialize(),
                 error: function(err){
-                    catdamnit.update.error(err);
+                    catdamnit.update.error(err.statusText);
                 },
                 success: function(data){
-                    $('.cd-login-modal-update').css('color', 'green').slideDown('fast')
-                        .text(data.message).delay(1000)
-                        .slideUp('fast', function(){
-                            $("body").removeClass("cd-login-modal-open");
-                            if (typeof data.redirect == 'string'){
-                                window.location.replace(
-                                    window.location.protocol
-                                        + "//" + window.location.host + data.redirect);
-                            }
-                        });
+                    if (typeof data.redirect == 'string'){
+                        window.location.replace(
+                            window.location.protocol
+                                + "//" + window.location.host + data.redirect);
+                    }
                 }
             });
         };
     }
-
     return { setupLoginModal: setupLoginModal };
 }());

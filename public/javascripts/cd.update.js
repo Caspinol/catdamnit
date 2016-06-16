@@ -9,23 +9,20 @@ catdamnit.update = (function(){
         
         modal
             .css('color', color)
-            .animate({'opacity': 1, 'z-index': 100}, 2000)
+            .animate({'opacity': 1, 'z-index': 100}, 1000)
             .text(message).delay(2000)
-            .animate({'opacity': 0, 'z-index': -10}, 2000);
+            .animate({'opacity': 0, 'z-index': -10}, 1000);
     },
     
     error = function(err){
-        
-        var message = err;
+        var message = err.mesage || err;
         if(err instanceof Error){
             message = err.message;
         }
-            
         showMessage(message, 'ERROR');
     },
 
     info = function(message){
-        
         showMessage(message, 'INFO');
     };
     

@@ -8,9 +8,10 @@ cert, key,
 fs = require('fs'),
 app = require('../server'),
 config = app.locals.config,
-log = app.locals.logger,
+log = require('log4js').getLogger('catdamnit'),
 http = require('http'),
 https = require('https'),
+config = require('../config');
 
 ssl_port = config.SSL.port;
 
