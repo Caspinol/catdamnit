@@ -5,19 +5,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel='stylesheet' charset="utf-8" href='/stylesheets/fonts.css'/>
         <link rel='stylesheet' charset="utf-8" href='/stylesheets/style.css'/>
+        <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
     </head>
     <body>
         <img class="cd-bg" src="../images/catdamnit_background.jpg" >
         <div class="cd-body">
-            {{#if user }}
-                {{> profile_header }}
-                {{> profile_content }}
-            {{else}}
-                {{> header }}
-                {{> content }}        
-            {{/if}}
-    
+            {{> header }}
 
+            {{> content }}        
+    
             <!-- Login modal -->
             <div class="cd-modal cd-login-modal">
                 <div class="cd-login-modal-head"></div>

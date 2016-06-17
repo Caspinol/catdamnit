@@ -35,18 +35,18 @@ app.locals.hbs = hbs;
 app.use(log4js.connectLogger(log4js.getLogger("http"), { level: 'auto' }));
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(bodyParser.json())
+app
+    .use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')))
+    .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: false }))
     .use(cookieParser())
     .use(express.static(path.join(__dirname, '/public')))
-/* Set up passport */
     .use(session({
         secret: 'Z|{~:Z|(*^$(@Y$IHJVJBVBN£@asdad/]£$%^',
         resave: true,
         saveUninitialized: true
     }))
-    .use(passport.initialize())
+    .use(passport.initialize()) /* Set up passport */
     .use(passport.session()); /* Passport will handle login sessions */
 
 require('./lib/auth')(passport, app.locals.db);
@@ -72,13 +72,12 @@ if (app.get('env') === 'production') {
     app.enable('view cache');
 }
 
-// error handlers
-
+// error handler
 app.use(function(err, req, res, next){
     var
     code = err.code,
     message = err.message;
-    
+    logger.error(err);
     // catch 404 and display page
     if(code === 404){
         res.status(404).render('error', { message: message });

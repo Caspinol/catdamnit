@@ -18,13 +18,21 @@
                 {{/if}}
             </li>    
             {{/each}}
+            {{#if user}}
+            <li class="link"><a id="cd-new-post" href="#">New Post</a></li>
+            <li class="link"><a href="/cvedit">CV</a></li>
+            {{/if}}
             <li class="link"><a href="/about">Me</a></li>
          </ul> <!-- End of cd-navbar-items -->
         <div class="cd-nav-menu">
             <div class="cd-nav-menu-content">
                 <ul>
                     <li class="link">
+                        {{#if user}}
+                        <a href="/logout">Logout</a>
+                        {{else}}
 	                    <a id="cd-login" href="#">Login</a>
+                        {{/if}}
 	                </li>
                 </ul>
             </div>

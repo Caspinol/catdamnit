@@ -1,7 +1,11 @@
 
     {{#if post}}
     <div class="cd-post-title">{{ post.post_title }}</div>
-    <div class="cd-post-meta">{{ post.post_date }}</div>
+    <div class="cd-post-meta">{{ post.post_date }}
+        {{#if user}}
+        <a href="/post/edit/{{post.postid}}">Edit</a>
+        {{/if}}
+    </div>
 
     <div class="cd-post-content">{{{ post.post_content }}}</div>
     {{/if}}
