@@ -1,11 +1,5 @@
         
 <div class="cd-content">                     
-    <div class="cd-content-left">
-
-        {{> post }}
-
-		{{> footer }}
-	</div>
 	<div class="cd-content-right">
 	    <div class="cd-content-right-tweets roundy">
              <a class="twitter-timeline"
@@ -45,5 +39,16 @@
 		        </ul>
 			</div>
     	</div>
+	</div>
+
+    <div class="cd-content-left">
+
+        {{> post }}
+
+        {{#unless user}}
+            {{> comments }}
+        {{/unless}}
+    
+		{{> footer }}
 	</div>
 </div><!-- End of cd-content -->    

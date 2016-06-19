@@ -1,4 +1,4 @@
-catdamnit.editor = (function(){
+cd.editor = (function(){
     'use strict';
     var
     show = function(){
@@ -18,12 +18,16 @@ catdamnit.editor = (function(){
         handle();
     },
 
+    edit = function(content){
+        tinymce.get('title').setContent(content);
+    },
+
     handle = function(){
         $('.cd-editor-form').on('submit', function(e){
             e.preventDefault();
             validatePost($(this), function(err, form_data){
                 if(err){
-                    catdamnit.update.error(err);
+                    cd.update.error(err);
                     return;
                 }
                 savePost(form_data);
@@ -45,10 +49,10 @@ catdamnit.editor = (function(){
             url: '/newpost',
             data: form_data,
             error: function(err){
-                catdamnit.update.error(err.statusText);
+                cd.update.error(err.statusText);
             },
             success: function(data){
-                catdamnit.update.info(data.message);
+                cd.update.info(data.message);
             }
         });
     };
@@ -71,5 +75,8 @@ catdamnit.editor = (function(){
         cb(null, form.serialize());
     };
 
-    return { show: show };
+    return {
+        show: show,
+        edit: edit
+    };
 }());

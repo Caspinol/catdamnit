@@ -1,4 +1,4 @@
-catdamnit.sticky = (function(){
+cd.sticky = (function(){
 
     var
     stickyDiv = $('.cd-header-nav');

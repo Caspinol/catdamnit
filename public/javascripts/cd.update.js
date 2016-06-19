@@ -1,4 +1,4 @@
-catdamnit.update = (function(){
+cd.update = (function(){
     'use strict';
 
     var

@@ -1,0 +1,21 @@
+<div class="cd-post-comment">
+    <form method="post" action="/comment/save/{{post.postid}}">
+        <textarea wrap="off" class="cd-comment-txt" name="comment_txt">
+            Leave a comment...
+        </textarea>
+        <input class="cd-comment-name" type="text" name="auth_name" placeholder="Name">
+        <input class="cd-comment-post button" type="submit" value="Submit">
+    </form>
+</div>
+
+<div class="cd-comments-wrap">
+    {{#if comment }}
+    <div class="cd-comment">
+        <div class="cd-comment-author">{{comment_author_name}}</div>
+        <div class="cd-comment-date">{{comment_date}}</div>
+        <div class="cd-comment-body">{{comment_body}}</div>
+    </div>
+    {{else}}
+    Be the first to comment
+    {{/if}}
+</div>

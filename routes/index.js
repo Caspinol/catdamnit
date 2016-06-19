@@ -9,16 +9,16 @@ module.exports = function(app, passport){
     /* Preload the common stuff */
     (function(app){
         app.use(function(req, res, next){
-            db.tx(function(t){
+            db.tx((t)=>{
                 return t.batch([
                     t.many("SELECT tagid, tagname FROM tags ORDER BY tagid;"),
-                    t.many("SELECT t.tagid,tagname,postid,post_title "
-                           +"FROM tags AS t INNER JOIN posts AS p "
-                           +"ON t.tagid = p.tagid GROUP BY t.tagid,p.postid "
-                           +"ORDER BY p.tagid;")
+                    t.many("SELECT "
+                           +"DISTINCT ON (post_title) tagid,post_title,postid,post_date "
+                           +"FROM posts;")
                 ]);
             })
                 .then((rows)=>{
+                    res.locals.tags = rows[0];
                     res.locals.posts = cleanupPosts(rows[0], rows[1]);
                     res.locals.title = config.appname;
                     res.locals.user = req.isAuthenticated()?req.user:null; 
@@ -32,10 +32,8 @@ module.exports = function(app, passport){
         });
     }(app));
     
-    
-    
     /* GET home page. */
-    app.get('/', function(req, res, next) {
+    app.get('/', (req, res, next)=>{
         db.one("SELECT post_title, post_content, post_date "
                +"FROM posts ORDER BY post_date desc LIMIT 1;")
             .then((post)=>{
@@ -49,25 +47,18 @@ module.exports = function(app, passport){
                 }));
             });
     }, doRender('boiler'));
-    
-    app.get('/newpost', loggedIn, function(req, res, next){
-        db.many("SELECT tagid, tagname FROM tags;")
-            .then((tags)=>{
-                app.locals.hbs.getTemplate('views/partials/editor.hbs')
-                    .then((t)=>{
-                        res.send(t({ tags: tags, editor: true }));
-                    })
-                    .catch((err)=>{
-                        return next(handleError({
-                            code: 404,
-                            message: "Failed to load editor"
-                        }));
-                    });
+
+    app.get('/newpost', loggedIn, (req, res, next)=>{
+        app.locals.hbs.getTemplate('views/partials/editor.hbs')
+            .then((t)=>{
+                res.send({
+                    editor: t({ tags: res.locals.tags })
+                });
             })
             .catch((err)=>{
                 return next(handleError({
                     code: 404,
-                    message: "Failed to load the tags"
+                    message: "Failed to load editor"
                 }));
             });
     });
@@ -89,11 +80,35 @@ module.exports = function(app, passport){
             });
         
     });
-
-    app.get('/post/:id', function(req, res, next){
+    
+    app.get('/post/edit/:id', loggedIn, (req, res, next)=>{
         db.one("SELECT * FROM posts WHERE postid=$1;", req.params.id)
-            .then((row)=>{
-                res.locals.post = row;
+            .then((rows)=>{
+                app.locals.hbs.getTemplate('views/partials/editor.hbs')
+                    .then((t)=>{
+                        res.send({
+                            editor: t({ tags: res.locals.tags, post: rows[0] })
+                        });
+                    });
+            })
+            .catch((err)=>{
+                return next(handleError({
+                    code: 404,
+                    message: "No page here human"
+                }));
+            });
+    });
+    
+    app.get('/post/:id', (req, res, next)=>{
+        db.tx(function(t){
+            return t.batch([
+                t.one("SELECT * FROM posts WHERE postid=$1;", req.params.id),
+                t.manyOrNone("SELECT * FROM comment WHERE postid=$1;", req.params.id)
+            ])
+        })
+            .then((rows)=>{
+                res.locals.post = rows[0];
+                res.locals.comment = rows[1];
                 next();
             })
             .catch((err)=>{
@@ -104,7 +119,22 @@ module.exports = function(app, passport){
             });
     }, doRender('boiler'));
 
-    app.get('/about', function(req, res, next){
+    app.post('/comment/save/:postid', (req, res, next)=>{
+        db.none("INSERT INTO comment(postid,comment_body,comment_author_name,"
+                +"comment_author_ip,comment_author_email) VALUES($1,$2,$3,$4,$5);",
+                [req.params.postid, req.body.comment_txt, req.body.auth_name, req.ip, ""])
+            .then(()=>{
+                res.send({message: "Comment added"});
+            })
+            .catch(err=>{
+                return next(handleError({
+                    code: 500,
+                    message: "Failed to save the post"
+                }));
+            });
+    });
+
+    app.get('/about', (req, res, next)=>{
         db.one("SELECT * FROM posts WHERE post_url=$1;", "/about")
             .then((row)=>{
                 res.locals.post = row;
@@ -122,9 +152,9 @@ module.exports = function(app, passport){
         res.render('boiler');
     });
 
-    app.post('/login', function(req, res, next){
+    app.post('/login', (req, res, next)=>{
         passport.authenticate('local-login',
-                              function(err, user, info){
+                              (err, user, info)=>{
                                   if(err) return next(handleError({
                                       code: 401,
                                       message: "Wrong username"
@@ -133,7 +163,7 @@ module.exports = function(app, passport){
                                       code: 401,
                                       message: info.message
                                   }));
-                                  req.logIn(user, function(err) {
+                                  req.logIn(user, (err)=>{
                                       if (err) { return next(err); }
                                       req.session.cookie.expires = false;
                                       req.session.cookie.maxAge = 1000*60*60; 
@@ -142,7 +172,7 @@ module.exports = function(app, passport){
                               })(req, res, next); 
     });
     
-    app.get('/logout', function(req, res){
+    app.get('/logout', (req, res)=>{
         req.logout();
         res.redirect('/');
     });

@@ -1,4 +1,4 @@
-catdamnit.login = (function(){
+cd.login = (function(){
 
     var setupLoginModal = function(){
         
@@ -19,7 +19,7 @@ catdamnit.login = (function(){
                 url: '/login',
                 data: form.serialize(),
                 error: function(err){
-                    catdamnit.update.error(err.statusText);
+                    cd.update.error(err.statusText);
                 },
                 success: function(data){
                     if (typeof data.redirect == 'string'){

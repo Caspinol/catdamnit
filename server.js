@@ -77,7 +77,6 @@ app.use(function(err, req, res, next){
     var
     code = err.code,
     message = err.message;
-    logger.error(err);
     // catch 404 and display page
     if(code === 404){
         res.status(404).render('error', { message: message });

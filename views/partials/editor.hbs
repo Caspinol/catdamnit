@@ -1,8 +1,8 @@
 
     <form method="post" class="cd-editor-form">
         <input class="cd-editor-title button" type="text"
-                name="post-title" placeholder="Title">
-        <textarea id="cd-post-editor" name="post-txt"></textarea>
+                name="post-title" placeholder="Title" value="{{post.post_title}}">
+        <textarea id="cd-post-editor" name="post-txt">{{post.post_content}}</textarea>
         <select name="post-tag" class="cd-editor-tag button">
             <option value="">Tag</option>
             {{#each tags }}
