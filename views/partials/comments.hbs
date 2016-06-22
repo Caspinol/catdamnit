@@ -1,3 +1,4 @@
+{{#if show_comments }}
 <div class="cd-post-comment">
     <form method="post" action="/comment/save/{{post.postid}}">
         <textarea wrap="off" class="cd-comment-txt" name="comment_txt">
@@ -10,12 +11,14 @@
 
 <div class="cd-comments-wrap">
     {{#if comment }}
-    <div class="cd-comment">
-        <div class="cd-comment-author">{{comment_author_name}}</div>
-        <div class="cd-comment-date">{{comment_date}}</div>
-        <div class="cd-comment-body">{{comment_body}}</div>
-    </div>
+        {{#each comment}}
+        <div class="cd-comment">
+            <div class="cd-comment-author">{{comment_date}} by {{comment_author_name}}</div>
+            <div class="cd-comment-body">{{comment_body}}</div>
+        </div>
+        {{/each}}
     {{else}}
     Be the first to comment
     {{/if}}
 </div>
+{{/if}}

@@ -30,7 +30,7 @@ cd.editor = (function(){
                     cd.update.error(err);
                     return;
                 }
-                savePost(form_data);
+                doSubmit(form_data);
             });
         });
 
@@ -42,7 +42,7 @@ cd.editor = (function(){
 
     };
 
-    function savePost(form_data){
+    function doSubmit(form_data){
 
         $.ajax({
             type: 'POST',
@@ -64,7 +64,7 @@ cd.editor = (function(){
             fd[input.name] = input.value;
         });
 
-        if(fd['post-title'] === undefined || fd['post-title'] === ''){
+        if(fd['post-title'].length === 0 || fd['post-title'] === ''){
             var e = new Error("Title is missing");
             return cb(e);
         }

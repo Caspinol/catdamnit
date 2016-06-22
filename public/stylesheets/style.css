@@ -2,6 +2,8 @@
 
 /* General tag styling */
 * { padding: 0; margin: 0; }
+ul { list-style-type: none; }
+a { text-decoration: none; }
 
 img.cd-bg { min-height: 100%; min-width: 990px; width: 100%; height: auto;
             position: fixed; top: 0; left: 0; }
@@ -10,16 +12,9 @@ img.cd-bg { min-height: 100%; min-width: 990px; width: 100%; height: auto;
   img.cd-bg { left: 50%; margin-left: -512px; }
 }
 
-body {
-    font-family: "LatoWeb";
-    font-style: normal;
-    color: #fff;
-    max-width: 100%;
-    overflow-x: hidden;
-}
+body { font-family: "LatoWeb"; font-style: normal; background-color: #000; color: #fff;
+       max-width: 100%; overflow-x: hidden; }
 
-ul { list-style-type: none; }
-a { text-decoration: none; }
 
 .cd-body { positon: relative; height: 100%; width: 990px; overflow: auto; }
 
@@ -41,9 +36,6 @@ a { text-decoration: none; }
 .cd-nav-items li a { display: block; margin: .2em .5em; 
                      text-decoration: none; font-size: 1em;
                      text-shadow: 1px 1px 1px rgba(0,0,0,.6); }
-
-
-/*.cd-nav-items li:hover > a { color: #8fde62; }*/
 
 .cd-nav-items ul { position: absolute; top: 90%; left: 0; opacity: 0; padding: .5em 0;
                    width: 8em; background: #0e0e0e;
@@ -106,7 +98,7 @@ a { text-decoration: none; }
               font-family: "LatoWeb"; font-size: 1em; }
 
 .cd-content-left { float: right; min-width: 50%; max-width: 50%; text-align: center;
-                   padding-left: 2em;
+                   padding-left: 2em; margin-right: 3em;
                    border-top: 1px solid grey; border-left: 1px solid grey;
                    border-radius: 20px; }
 
@@ -134,7 +126,7 @@ p code { color: white; margin-left: 1.5em; display: block;
 .cd-content-links-list ul li a { color: grey; display: inline-block;}
 
 /* modal generic */
-.cd-modal { position: fixed; opacity: 0; background-color: grey;
+.cd-modal { position: fixed; opacity: 0; background-color: grey; z-index: -100;
             -webkit-box-shadow: inset 0 0 10px 4px black;
             -moz-box-shadow: inset 0 0 10px 4px black;
 	    box-shadow: inset 0 0 10px 4px black; 
@@ -163,7 +155,7 @@ p code { color: white; margin-left: 1.5em; display: block;
                             -moz-transition: all 0.3s ease; }
 /* Updates modal */
 .cd-update-modal { bottom: 2em; left: 2em; text-align: center; padding: 2%;
-                   min-height: 5em; height: auto; min-width: 12em; z-index: -10; }
+                   min-height: 5em; height: auto; min-width: 12em; }
 
 
 /* Editor */
@@ -187,6 +179,14 @@ input[type="text"].cd-editor-title { font-size: 1em; }
                                     border: 1px solid grey; border-radius: 5px;
                                     padding-left: 2px; }
 .cd-post-comment input[type=submit] { width: 25%; }
+
+.cd-comment { background-color: black; border: 1px solid grey; border-radius: 8px;
+              height: auto; min-height: 3em; margin: 2em 0; padding: .5em 0 .5em .5em;
+              color: grey; }
+
+.cd-comment .cd-comment-author { text-align: left; }
+.cd-comment .cd-comment-author:before { content: "\1f563"; }
+.cd-comment .cd-comment-author:after { content: " :"; }
 
 /* Effects */
 /* Little negative-background effect for the links */

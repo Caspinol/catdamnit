@@ -77,9 +77,10 @@ app.use(function(err, req, res, next){
     var
     code = err.code,
     message = err.message;
+    
     // catch 404 and display page
-    if(code === 404){
-        res.status(404).render('error', { message: message });
+    if(code === 404 || code === 400){
+        res.render('error', { message: message });
     }else{
         res.writeHead(code, message, {'content-type': 'text/plain'});
         res.end(message);

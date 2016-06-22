@@ -12,7 +12,7 @@ var cd = (function(){
     registerLinkHandlers = function(){
         /* Enable login modal */
         $('#cd-login').on('click', function(){
-            $('.cd-login-modal').css('opacity', 1);
+            $('.cd-login-modal').css('opacity', 1).css('z-index', 100);
             $('.cd-content').addClass('blur');
         });
         /* Editor handler */

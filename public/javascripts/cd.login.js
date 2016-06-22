@@ -4,7 +4,7 @@ cd.login = (function(){
         
         /* Activate close button */
         $(".cd-login-modal-head").on('click',function(){
-            $(".cd-login-modal").css('opacity', 0);
+            $(".cd-login-modal").css('opacity', 0).css('z-index', -100);
             $('.cd-content').removeClass('blur');
         });
 

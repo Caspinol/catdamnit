@@ -1,6 +1,7 @@
 var
 config = require('../config'),
-logger = require('log4js').getLogger('catdamnit');
+logger = require('log4js').getLogger('catdamnit'),
+s = require('../lib/sanity');
 
 module.exports = function(app, passport){
     'use strict';
@@ -41,6 +42,7 @@ module.exports = function(app, passport){
                 next();
             })
             .catch((err)=>{
+                logger.error(err);
                 return next(handleError({
                     code: 404,
                     message: "Failed to load the post"
@@ -100,6 +102,12 @@ module.exports = function(app, passport){
     });
     
     app.get('/post/:id', (req, res, next)=>{
+        if(!s.isPostIdFine(req.params.id)){
+            return next(handleError({
+                code: 400,
+                message: "Invalid post request. As if someone was messing with it..."
+            }));
+        }
         db.tx(function(t){
             return t.batch([
                 t.one("SELECT * FROM posts WHERE postid=$1;", req.params.id),
@@ -109,6 +117,7 @@ module.exports = function(app, passport){
             .then((rows)=>{
                 res.locals.post = rows[0];
                 res.locals.comment = rows[1];
+                res.locals.show_comments = true;
                 next();
             })
             .catch((err)=>{
@@ -120,17 +129,28 @@ module.exports = function(app, passport){
     }, doRender('boiler'));
 
     app.post('/comment/save/:postid', (req, res, next)=>{
+        if(!s.isPostIdFine(req.params.postid)){
+            return next(handleError({
+                code: 406,
+                message: "Are you hacking me...ok, then STOP!"
+            }));
+        }
+        if(!s.isStringFine(req.body.comment_txt) || !s.isStringFine(req.body.auth_name)){
+            return next(handleError({
+                code: 418,
+                message: "You did it. I'm a teapot!"
+            }));
+        }
         db.none("INSERT INTO comment(postid,comment_body,comment_author_name,"
                 +"comment_author_ip,comment_author_email) VALUES($1,$2,$3,$4,$5);",
                 [req.params.postid, req.body.comment_txt, req.body.auth_name, req.ip, ""])
             .then(()=>{
-                res.send({message: "Comment added"});
+                res.send({message: "Comment saved!"});
             })
             .catch(err=>{
-                return next(handleError({
-                    code: 500,
-                    message: "Failed to save the post"
-                }));
+                res.status(500).send({
+                    message: "Upss...i encountered monsters while saving the comment"
+                });
             });
     });
 
@@ -152,30 +172,52 @@ module.exports = function(app, passport){
         res.render('boiler');
     });
 
+    app.get('/cv', cvProtect, (req, res, next)=>{
+        res.render('myCV');
+    });
+
+    app.get('/cv/login', (req, res, next)=>{
+        res.render('myCVlogin');
+    });
+
+    app.post('/cv/login',
+             passport.authenticate('local-login',
+                                   { successRedirect: '/cv',
+                                     failureRedirect: '/cv/login'
+                                   }));
+    
     app.post('/login', (req, res, next)=>{
-        passport.authenticate('local-login',
-                              (err, user, info)=>{
-                                  if(err) return next(handleError({
-                                      code: 401,
-                                      message: "Wrong username"
-                                  }));
-                                  if(!user) return next(handleError({
-                                      code: 401,
-                                      message: info.message
-                                  }));
-                                  req.logIn(user, (err)=>{
-                                      if (err) { return next(err); }
-                                      req.session.cookie.expires = false;
-                                      req.session.cookie.maxAge = 1000*60*60; 
-                                      res.send({redirect: '/profile'});
-                                  });
-                              })(req, res, next); 
+        passport
+            .authenticate('local-login',
+                          (err, user, info)=>{
+                              if(err) return next(handleError({
+                                  code: 401,
+                                  message: "Bad username or password!"
+                              }));
+                              if(!user) return next(handleError({
+                                  code: 401,
+                                  message: info.message
+                              }));
+                              req.logIn(user, (err)=>{
+                                  if (err) { return next(err); }
+                                  req.session.cookie.expires = false;
+                                  req.session.cookie.maxAge = 1000*60*60; 
+                                  res.send({redirect: '/profile'});
+                              });
+                          })(req, res, next); 
     });
     
     app.get('/logout', (req, res)=>{
         req.logout();
         res.redirect('/');
     });
+}
+
+function cvProtect(req, res, next){
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/cv/login');
 }
 
 function loggedIn(req, res, next) {
@@ -209,5 +251,6 @@ function doRender(view){
 function handleError(err){
     var error = new Error(err.message);
     error.code = err.code;
+    error.raw = err;
     return error;
 }
