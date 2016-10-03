@@ -35,7 +35,6 @@ var cd = (function(){
                 cd.update.error(err.statusText);
             },
             success: (data)=>{
-                console.log(data);
                 content.empty();
                 content.html(data.editor);
                 cd.editor.show();

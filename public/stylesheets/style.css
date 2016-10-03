@@ -74,7 +74,6 @@ body { font-family: "LatoWeb"; font-style: normal; background-color: #000; color
                        transition: opacity 0.4s ease-in 0.4s ;}
 
 .cd-nav-menu-content:hover { display: block; }
-.cd-nav-menu-content ul {  }
 .cd-nav-menu-content ul li { display: inline; }
 .cd-nav-menu-btn { float: right; margin: 0 2em 0; display: inline-block;
                    width: 2em; text-align: center; }

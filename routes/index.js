@@ -1,7 +1,9 @@
 var
 config = require('../config'),
 logger = require('log4js').getLogger('catdamnit'),
-s = require('../lib/sanity');
+s = require('../lib/sanity'),
+pdf = require('html-pdf'),
+path = require('path');
 
 module.exports = function(app, passport){
     'use strict';
@@ -28,7 +30,10 @@ module.exports = function(app, passport){
                 .catch((err)=>{
                     logger.error("Failed to load the post...");
                     logger.error(err);
-                    next(err);
+                    return next(handleError({
+			code: 404,
+			message: "Failed to load the post"
+		    }));
                 });
         });
     }(app));
@@ -89,7 +94,7 @@ module.exports = function(app, passport){
                 app.locals.hbs.getTemplate('views/partials/editor.hbs')
                     .then((t)=>{
                         res.send({
-                            editor: t({ tags: res.locals.tags, post: rows[0] })
+                            editor: t({ tags: res.locals.tags, post: rows })
                         });
                     });
             })
@@ -206,10 +211,35 @@ module.exports = function(app, passport){
                               });
                           })(req, res, next); 
     });
+
+    app.get('/cvget', (req, res)=>{
+        var options = {
+            format: 'A4',
+            base: path.join('file://', __dirname, '../public/'),
+            type: 'pdf',
+            orientation: 'portrait',
+            phantomArgs: '--ignore-ssl-errors=true'
+        };
+
+        app.locals.hbs.getTemplate('views/myCV.hbs')
+            .then((t)=>{
+                pdf.create(t(), options).toFile('./tmp/cv.pdf', function(err, pdf) {
+                    if (err) return logger.error(err.message);
+                    res.download(pdf.filename, 'cv.pdf');
+                });;
+            });
+    });
     
     app.get('/logout', (req, res)=>{
         req.logout();
         res.redirect('/');
+    });
+
+    app.get('*', (req, res, next)=>{
+        return next(handleError({
+            code: 404,
+            message: "Nothing to see here human"
+        }));
     });
 }
 

@@ -19,6 +19,7 @@ cd.editor = (function(){
     },
 
     edit = function(content){
+        console.log(content);
         tinymce.get('title').setContent(content);
     },
 
@@ -77,6 +78,6 @@ cd.editor = (function(){
 
     return {
         show: show,
-        edit: edit
+        //edit: edit
     };
 }());

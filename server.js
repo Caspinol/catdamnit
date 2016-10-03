@@ -75,7 +75,7 @@ if (app.get('env') === 'production') {
 // error handler
 app.use(function(err, req, res, next){
     var
-    code = err.code,
+    code = err.code | 500,
     message = err.message;
     
     // catch 404 and display page
@@ -88,4 +88,3 @@ app.use(function(err, req, res, next){
 });
 
 module.exports = app;
-

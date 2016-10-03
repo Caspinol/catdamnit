@@ -11,6 +11,15 @@
         <link type="text/css" rel="stylesheet" href="/stylesheets/fonts.css">
 
     </head>
-    <body>
+    <body class="login-wrap">
+        <div class="login">
+            <h1>Login</h1>
+            <form method="post" action="/cv/login">
+    	        <input type="text" name="username" placeholder="Username" required="required"/>
+                <input type="password" name="password"
+                                        placeholder="Password" required="required"/>
+                <button type="submit" class="btn">See CV</button>
+            </form>
+        </div>
     </body
 </html>
