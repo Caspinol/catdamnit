@@ -7,3 +7,6 @@ permissions:
   - object: /
     owner: ubuntu
     group: ubuntu
+hooks:
+  BeforeInstall:
+  - location: scripts/cleanup.sh
