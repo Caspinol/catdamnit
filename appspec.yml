@@ -1,5 +1,7 @@
 version: 0.0
 os: linux
 files:
-        - source: /
-        destination: /home/ubuntu/
+  - source: /
+    destination: /home/ubuntu/
+hooks:
+  BeforeInstall:
