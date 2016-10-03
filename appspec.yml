@@ -2,4 +2,8 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu/www/
+    destination: /home/ubuntu/www/catdamnit
+permissions:
+  - object: /
+    owner: ubuntu
+    group: ubuntu
