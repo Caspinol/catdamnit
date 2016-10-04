@@ -10,5 +10,7 @@ permissions:
 hooks:
   BeforeInstall:
   - location: /scripts/cleanup.sh
-  AfterInstall:
+  ApplicationStart:
   - location: /scripts/restart.sh
+  ApplicationStop:
+  - location: /scripts/stop.sh
