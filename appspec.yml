@@ -11,4 +11,4 @@ hooks:
   BeforeInstall:
   - location: /scripts/cleanup.sh
   AfterInstall:
-  - location /scripts/restart.sh
+  - location: /scripts/restart.sh
