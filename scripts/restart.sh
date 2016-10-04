@@ -1,5 +1,5 @@
 #!/bin/bash
 
-PM2=$(which pm2)
+PM2=/usr/local/bin/pm2
 
 $PM2 start www
