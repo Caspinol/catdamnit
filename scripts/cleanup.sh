@@ -3,7 +3,6 @@
 # EC2 instance working directory
 WORK_DIR=/home/ubuntu/www/catdamnit
 
-
 # Cleanup deployment dir
 rm -rf $WORK_DIR/bin
 rm -rf $WORK_DIR/lib
