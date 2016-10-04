@@ -1,4 +1,6 @@
-
+/*
+  Server config
+*/
 var
 config = require('./config'),
 express = require('express'),
