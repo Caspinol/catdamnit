@@ -1,6 +1,5 @@
 #!/usr/bin/fish
 
-
 # EC2 instance working directory
 WORK_DIR=/home/ubuntu/www/catdamnit
 
