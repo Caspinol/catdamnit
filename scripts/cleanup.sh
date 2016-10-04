@@ -1,5 +1,5 @@
-#!/usr/bin/fish
-#sjkldnbkKris was here
+#!/bin/bash
+
 # EC2 instance working directory
 WORK_DIR=/home/ubuntu/www/catdamnit
 
