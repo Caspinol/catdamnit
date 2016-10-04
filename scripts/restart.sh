@@ -1,5 +1,3 @@
 #!/bin/bash
 
-PM2=/usr/local/bin/pm2
-
-$PM2 start www
+/usr/local/bin/pm2 start www
