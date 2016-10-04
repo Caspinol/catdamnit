@@ -1,3 +1,3 @@
 #!/bin/bash
 
-/usr/local/bin/pm2 start www
+/usr/local/bin/pm2 restart www

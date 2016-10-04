@@ -11,9 +11,6 @@ hooks:
   BeforeInstall:
   - location: /scripts/cleanup.sh
     runas: ubuntu
-  ApplicationStart:
+  AfterInstall:
   - location: /scripts/restart.sh
-    runas: ubuntu
-  ApplicationStop:
-  - location: /scripts/stop.sh
     runas: ubuntu
