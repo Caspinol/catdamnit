@@ -61,7 +61,7 @@ section:last-child { padding: 20px 0 10px; }
 .cd-cv-sub-details { font-size: 0.8em; font-style: italic; margin-bottom: 3px; }
 .skills { page-break-before: always; } 
 .key-skills { list-style-type: none; -moz-column-count:3; -webkit-column-count:3;
-	     column-count:3; margin-bottom: 20px; font-size: 1em; color: #444; }
+	      column-count:3; margin-bottom: 20px; font-size: 1em; color: #444; }
 
 .key-skills ul li { margin-bottom: 3px; }
 

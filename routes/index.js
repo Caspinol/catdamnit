@@ -1,14 +1,14 @@
-var
-config = require('../config'),
-logger = require('log4js').getLogger('catdamnit'),
-s = require('../lib/sanity'),
-pdf = require('html-pdf'),
-path = require('path');
+'use strict';
+
+var config = require('../config'),
+    logger = require('log4js').getLogger('catdamnit'),
+    s = require('../lib/sanity'),
+    pdf = require('html-pdf'),
+    path = require('path');
 
 module.exports = function(app, passport){
-    'use strict';
     var db = app.locals.db;
-
+    
     /* Preload the common stuff */
     (function(app){
         app.use(function(req, res, next){
@@ -54,7 +54,7 @@ module.exports = function(app, passport){
                 }));
             });
     }, doRender('boiler'));
-
+    
     app.get('/newpost', loggedIn, (req, res, next)=>{
         app.locals.hbs.getTemplate('views/partials/editor.hbs')
             .then((t)=>{
@@ -132,12 +132,12 @@ module.exports = function(app, passport){
                 }));
             });
     }, doRender('boiler'));
-
+    
     app.post('/comment/save/:postid', (req, res, next)=>{
         if(!s.isPostIdFine(req.params.postid)){
             return next(handleError({
                 code: 406,
-                message: "Are you hacking me...ok, then STOP!"
+                message: "STOP...hacking me!"
             }));
         }
         if(!s.isStringFine(req.body.comment_txt) || !s.isStringFine(req.body.auth_name)){
@@ -158,7 +158,7 @@ module.exports = function(app, passport){
                 });
             });
     });
-
+    
     app.get('/about', (req, res, next)=>{
         db.one("SELECT * FROM posts WHERE post_url=$1;", "/about")
             .then((row)=>{
@@ -172,19 +172,19 @@ module.exports = function(app, passport){
                 }));
             });
     }, doRender('boiler'));
-
+    
     app.get('/profile', loggedIn, (req, res)=>{
         res.render('boiler');
     });
-
+    
     app.get('/cv', cvProtect, (req, res, next)=>{
         res.render('myCV');
     });
-
+    
     app.get('/cv/login', (req, res, next)=>{
         res.render('myCVlogin');
     });
-
+    
     app.post('/cv/login',
              passport.authenticate('local-login',
                                    { successRedirect: '/cv',
@@ -211,7 +211,7 @@ module.exports = function(app, passport){
                               });
                           })(req, res, next); 
     });
-
+    
     app.get('/cvget', (req, res)=>{
         var options = {
             format: 'A4',
@@ -220,7 +220,7 @@ module.exports = function(app, passport){
             orientation: 'portrait',
             phantomArgs: '--ignore-ssl-errors=true'
         };
-
+        
         app.locals.hbs.getTemplate('views/myCV.hbs')
             .then((t)=>{
                 pdf.create(t(), options).toFile('./tmp/cv.pdf', function(err, pdf) {
@@ -234,7 +234,7 @@ module.exports = function(app, passport){
         req.logout();
         res.redirect('/');
     });
-
+    
     app.get('*', (req, res, next)=>{
         return next(handleError({
             code: 404,

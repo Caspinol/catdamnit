@@ -1,17 +1,16 @@
 /*
   Server config
 */
-var
-config = require('./config'),
-express = require('express'),
-exphbs = require('express-handlebars'),
-session = require('express-session'),
-path = require('path'),
-favicon = require('serve-favicon'),
-cookieParser = require('cookie-parser'),
-bodyParser = require('body-parser'),
-passport = require('passport'),
-log4js = require('log4js');
+var config = require('./config'),
+    express = require('express'),
+    exphbs = require('express-handlebars'),
+    session = require('express-session'),
+    path = require('path'),
+    favicon = require('serve-favicon'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    passport = require('passport'),
+    log4js = require('log4js');
 
 log4js.configure(config.logging);
 var logger = log4js.getLogger('catdamnit');
@@ -81,12 +80,7 @@ app.use(function(err, req, res, next){
     message = err.message;
     
     // catch 404 and display page
-    if(code === 404 || code === 400){
-        res.render('error', { message: message });
-    }else{
-        res.writeHead(code, message, {'content-type': 'text/plain'});
-        res.end(message);
-    }
+    res.render('error', { message: message });
 });
 
 module.exports = app;
