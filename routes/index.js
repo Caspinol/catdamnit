@@ -186,30 +186,31 @@ module.exports = function(app, passport){
     });
     
     app.post('/cv/login',
-             passport.authenticate('local-login',
-                                   { successRedirect: '/cv',
-                                     failureRedirect: '/cv/login'
-                                   }));
+             passport.authenticate(
+                 'local-login',
+                 { successRedirect: '/cv',
+                   failureRedirect: '/cv/login'
+                 }));
     
     app.post('/login', (req, res, next)=>{
-        passport
-            .authenticate('local-login',
-                          (err, user, info)=>{
-                              if(err) return next(handleError({
-                                  code: 401,
-                                  message: "Bad username or password!"
-                              }));
-                              if(!user) return next(handleError({
-                                  code: 401,
-                                  message: info.message
-                              }));
-                              req.logIn(user, (err)=>{
-                                  if (err) { return next(err); }
-                                  req.session.cookie.expires = false;
-                                  req.session.cookie.maxAge = 1000*60*60; 
-                                  res.send({redirect: '/profile'});
-                              });
-                          })(req, res, next); 
+        passport.authenticate(
+            'local-login',
+            (err, user, info)=>{
+                if(err) return next(handleError({
+                    code: 401,
+                    message: "Bad username or password!"
+                }));
+                if(!user) return next(handleError({
+                    code: 401,
+                    message: info.message
+                }));
+                req.logIn(user, (err)=>{
+                    if (err) { return next(err); }
+                    req.session.cookie.expires = false;
+                    req.session.cookie.maxAge = 1000*60*60; 
+                    res.send({redirect: '/profile'});
+                });
+            })(req, res, next); 
     });
     
     app.get('/cvget', (req, res)=>{
@@ -234,6 +235,11 @@ module.exports = function(app, passport){
         req.logout();
         res.redirect('/');
     });
+
+    app.get('/cvlogout', (req, res)=>{
+        req.logout();
+        res.redirect('/cv');
+    })
     
     app.get('*', (req, res, next)=>{
         return next(handleError({
