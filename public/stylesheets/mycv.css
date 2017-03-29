@@ -1,4 +1,7 @@
-html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,
+kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,
+tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,
+summary,time,mark,audio,video
 { border: 0; font: inherit; font-size: 100%; margin: 0; padding: 0;
   vertical-align: baseline; }
 
@@ -51,7 +54,7 @@ section:last-child
 .section_body
 { float: right;	width: 72.5%; }
 .section_title h1
-{ font-family: 'LatoWebBold'; font-style: italic; font-size: 1.5em; color: #FAAD3A; }
+{ font-family: 'LatoWebBold'; font-style: italic; font-size: 1.5em; color: #faad3a; }
 .section_body h2
 { font-family: 'LatoWebBold'; font-size: 1.5em; margin-bottom: -2px; }
 .cd-cv-sub-details
@@ -64,7 +67,7 @@ section:last-child
 .key-skills ul li
 { margin-bottom: 3px; }
 .login-wrap
-{ width: 100%; height:100%;	font-family: 'LatoWebMedium'; }
+{ width: 100%; height:100%; font-family: 'LatoWebMedium'; }
 .login
 { position: absolute; top: 50%; left: 50%; margin: -150px 0 0 -150px; width: 300px; height: 300px; }
 .login h1
@@ -85,6 +88,12 @@ input:focus
   cursor: pointer; margin-left: .65em; border: 1px grey solid; border-radius: 5px; }
 .btn:hover, .btn:active
 { background-color: #333333; color: #d358f7; }
+
+.doge
+{ z-index: 200; position: absolute; border: 2px #aaa solid; border-radius: 5px; background-color: #aaa;
+  color: #faad3a; text-align: center; }
+.doge img
+{ display: block; }
 
 @media all and (min-width: 602px) and (max-width: 800px) {
     #headshot { display: none; }

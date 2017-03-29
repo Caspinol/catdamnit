@@ -14,4 +14,5 @@
     };
 
     doPrint();
+    doge.doge();
 }());
