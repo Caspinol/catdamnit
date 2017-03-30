@@ -14,5 +14,5 @@
     };
 
     doPrint();
-    doge.doge();
+    //setTimeout(doge.doge(), 30000);
 }());
