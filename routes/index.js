@@ -177,7 +177,7 @@ module.exports = function(app, passport){
         res.render('boiler');
     });
     
-    app.get('/cv', cvProtect, (req, res, next)=>{
+    app.get('/cv', (req, res, next)=>{
         res.render('myCV');
     });
     
