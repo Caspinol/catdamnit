@@ -35,7 +35,6 @@ app.locals.hbs = hbs;
 
 app.use(log4js.connectLogger(log4js.getLogger("http"), { level: 'auto' }));
 
-// uncomment after placing your favicon in /public
 app
     .use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')))
     .use(bodyParser.json())
@@ -45,7 +44,11 @@ app
     .use(session({
         secret: 'Z|{~:Z|(*^$(@Y$IHJVJBVBN£@asdad/]£$%^',
         resave: true,
-        saveUninitialized: true
+        saveUninitialized: true,
+	cookie: {
+		secure: true,
+		expires: new Date(Date.now() + 60 * 60 * 1000) // 1 hour
+	}
     }))
     .use(passport.initialize()) /* Set up passport */
     .use(passport.session()); /* Passport will handle login sessions */
