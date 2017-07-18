@@ -1,7 +1,7 @@
 /*
   Server config
 */
-var config = require('./config'),
+const config = require('./config'),
     express = require('express'),
     exphbs = require('express-handlebars'),
     session = require('express-session'),
@@ -13,7 +13,7 @@ var config = require('./config'),
     log4js = require('log4js');
 
 log4js.configure(config.logging);
-var logger = log4js.getLogger('catdamnit');
+const logger = log4js.getLogger('catdamnit');
 
 /* Set up app object */
 var app = express();
