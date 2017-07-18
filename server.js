@@ -68,6 +68,8 @@ if(config.ssl && app.get('env') === 'development'){
     });
 }
 
+app.disable('x-powered-by');
+
 /* Routes handlers */
 require('./routes/index')(app, passport);
 
